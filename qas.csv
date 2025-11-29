@@ -1,0 +1,194 @@
+,Question,Title,Answer
+51738,"So, we know that Python uses a reference system, in order to refer to values in a list. So, if we create a new variable=list[index], the variable points to that list index. But what about when we are slicing a new list? Does the new sliced list use pointers? Or is it a new list in itself?",Does Python use pointers when creating a new sliced list?,"A list in Python is made of an array of references (plus some bookkeeping data). Slicing allocates a new array, but those copied references still point to the same heap objects.
+When you do variable=list[index], the variable does not point to the list index. Rather, it references the same object that the list does at that index (at the time it is looked up; they can be changed independently later)."
+28721,"I installed Python 2.6 from source for software testing (2.7 was preinstalled on my Linux distro). However, I cannot import Tkinter within 2.6, I suppose because it doesn't know where to find Tk. How do I either help 2.6 find the existing Tkinter install or reinstall Tkinter for 2.6?",Installed Python from source and cannot import Tkinter - how to install?,"I solved this by adding '/usr/lib/x86_64-linux-gnu' to lib_dirs in setup.py, then rebuilding python"
+41666,"We have a spark job running which consumes data from kafka stream , do some analytics and store the result.
+Since data is consumed as they are produced to kafka, if we want to get 
+
+count for the whole day,    count for an hour,      average for the whole
+  day
+
+that is not possible with this approach. Is there any way which we should follow to accomplish such requirement
+Appreciate any help
+Thanks and Regards
+Raaghu.K",spark consume from stream -- considering data for longer period,"Your streaming job is not supposed to calculate the Daily count/Avg.
+Approach 1 :
+You can store the data consumer from Kafka into a persistent storage like DB/HBase/HDFS , and then you can run Daily batch which will calculate all the statistics for you like Daily count or avg.
+Approach 2 :
+In order to get that information form streaming itself you need to use Accumulators which will hold the record count,sum. and calculate avg according.
+Approach 3 :
+Use streaming window, but holding data for a day doesn't make any sense. If you need 5/10 min avg, you can use this.
+I think the first method is preferable as it will give you more flexibility to calculate all the analytics you want."
+61086,"I just installed Anaconda3 (64-bit) Individual Edition on my Windows 7 machine. I was instructed to do this by setup instructions for an upcoming workshop I'm attending; they said, ""Installing all of Python's research packages individually can be a bit difficult, so we recommend Anaconda, an all-in-one installer.""
+Is it possible to install another Python IDE, such as IDLE, on the same computer as Anaconda?",Can Anaconda3 and Python-IDLE coexist on the same computer?,"Definitely yes.
+My pc is also running at 64 bits and windows 7.
+I have Anaconda (Spyder as editor) and IDLE (interactive shell) at the same time.
+Having Anaconda is useful in sense that lots of packages of modules were included when we install it."
+22560,"I am working on an application (python based), which is deployed on GAE, it was working fine till last day, but I can't seem to update any code on app engine since this morning, it is complaining about some sort of issue with password, I have double checked and email id and password are correct.
+here is the stack trace which I receive:
+10:47 PM Cloning 706 static files.
+2012-11-03 22:47:07,913 WARNING appengine_rpc.py:542 ssl module not found.
+Without the ssl module, the identity of the remote host cannot be verified, and
+connections may NOT be secure. To fix this, please install the ssl module from
+http://pypi.python.org/pypi/ssl .
+To learn more, see https://developers.google.com/appengine/kb/general#rpcssl 
+Password for user@gmail.com: 2012-11-03 22:47:07,913 ERROR appcfg.py:2266 An unexpected error occurred. Aborting. 
+Traceback (most recent call last):
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 2208, in DoUpload
+    missing_files = self.Begin()
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 1934, in Begin
+    CloneFiles('/api/appversion/cloneblobs', blobs_to_clone, 'static')
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 1929, in CloneFiles
+    result = self.Send(url, payload=BuildClonePostBody(chunk))
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 1841, in Send
+    return self.rpcserver.Send(url, payload=payload, **self.params)
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appengine_rpc.py"", line 403, in Send
+    self._Authenticate()
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appengine_rpc.py"", line 543, in _Authenticate
+    super(HttpRpcServer, self)._Authenticate()
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appengine_rpc.py"", line 293, in _Authenticate
+    credentials = self.auth_function()
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 2758, in GetUserCredentials
+    password = self.raw_input_fn(password_prompt)
+EOFError: EOF when reading a line
+10:47 PM Rolling back the update.
+2012-11-03 22:47:08,818 WARNING appengine_rpc.py:542 ssl module not found.
+Without the ssl module, the identity of the remote host cannot be verified, and
+connections may NOT be secure. To fix this, please install the ssl module from
+http://pypi.python.org/pypi/ssl .
+To learn more, see https://developers.google.com/appengine/kb/general#rpcssl 
+Password for user@gmail.com: Traceback (most recent call last):
+  File ""C:\Program Files (x86)\Google\google_appengine\appcfg.py"", line 171, in 
+    run_file(__file__, globals())
+  File ""C:\Program Files (x86)\Google\google_appengine\appcfg.py"", line 167, in run_file
+    execfile(script_path, globals_)
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 4322, in 
+    main(sys.argv)
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 4313, in main
+    result = AppCfgApp(argv).Run()
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 2599, in Run
+    self.action(self)
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 4048, in __call__
+    return method()
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 3065, in Update
+    self.UpdateVersion(rpcserver, self.basepath, appyaml)
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 3047, in UpdateVersion
+    lambda path: self.opener(os.path.join(basepath, path), 'rb'))
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 2267, in DoUpload
+    self.Rollback()
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 2150, in Rollback
+    self.Send('/api/appversion/rollback')
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 1841, in Send
+    return self.rpcserver.Send(url, payload=payload, **self.params)
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appengine_rpc.py"", line 403, in Send
+    self._Authenticate()
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appengine_rpc.py"", line 543, in _Authenticate
+    super(HttpRpcServer, self)._Authenticate()
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appengine_rpc.py"", line 293, in _Authenticate
+    credentials = self.auth_function()
+  File ""C:\Program Files (x86)\Google\google_appengine\google\appengine\tools\appcfg.py"", line 2758, in GetUserCredentials
+    password = self.raw_input_fn(password_prompt)
+EOFError: EOF when reading a line
+2012-11-03 22:47:09 (Process exited with code 1)
+
+You can close this window now.
+Any Help will be appreciated.
+P.S, I have tried from command line as well as Google app engine launcher.",Google App Engine Update Issue,"After 3 days of endless searching, I have figured out the problem, if you are facing this issue, first thing you have to check is your system time, mine was incorrect due to daylight saving changes.
+Thanks"
+32203,"Recently I've been receiving this error regarding what appears to be an insufficiency in connection slots along with many of these Heroku errors:
+
+H18 - Request Interrupted
+H19 - Backend connection timeout
+H13 - Connection closed without response
+H12 - Request timeout
+
+Error
+django.db.utils.OperationalError in /
+FATAL: remaining connection slots are reserved for non-replication superuser connections
+Current Application setup:
+
+Django 1.7.4
+Postgres
+Heroku (2x 2 dynos, Standard-2) 5ms response time, 13rpm Throughput
+
+Are there general good practices for where one should or should not perform querysets in a Django application, or when to close a database connection?
+I've never experienced this error before. I have increased my dynos on heroku and allocated significantly more RAM and I am still experiencing the same issue.
+I've found similar questions on Stack Overflow but I haven't been able to figure out what might be causing the issue exactly.
+I have querysets in Model methods, views, decorator views, context processors.
+My first inclination would be that there is an inefficient queryset being performed somewhere causing connections to remain open that eventually crashes the application with enough people accessing the website.
+Any help is appreciated. Thanks.",Django/Postgres: FATAL: remaining connection slots are reserved for non-replication superuser connections,"I realized that I was using the django server in my procfile. I accidentally commented out and commited it to heroku instead of using gunicorn. Once I switched to gunicorn on the same heroku plan the issue was resolved.
+Using a production level application server really makes a big difference. Also don't code at crazy hours of the day when you're prone to errors."
+44001,"Using anaconda 3.5/jupyter/spyder.
+I have installed Py2exe 0.9.2.2 which supports Python 3.3 and above.
+I am interested in creating an executable file from python script.
+The code py -3.4 -m py2exe.build_exe myscript.py does not work in jupyter notebook and anaconda prompt.
+i see python.exe file located in the folder:
+
+C:\Users\me\AppData\Local\Continuum\Anaconda2
+
+Thanks in advance for the help.",py2exe while using anaconda,"@Jeronimo answer worked right.
+
+Wherever you took that from, but it looks like a command line. Or maybe there's an IPython magic command ""%py"" that I dont know of. Anyways, try opening a command line in your Anaconda folder, and do python.exe -m py2exe.build_exe C:/full/path/to/myscript.py."
+3514,Is there anyway to discover the python value of a PyObject* from a corefile in gdb,Accessing Python Objects in a Core Dump,"It's lots of work, but of course it can be done, especially if you have all the symbols. Look at the header files for the specific version of Python (and compilation options in use to build it): they define PyObject as a struct which includes, first and foremost, a pointer to a type. Lots of macros are used, so you may want to run the compile of that Python from sources again, with exactly the same flags but in addition a -E to stop after preprocessing, so you can refer to the specific C code that made the bits you're seeing in the core dump.
+A type object has, among many other things, a string (array of char) that's its name, and from it you can infer what exactly objects of that type contain -- be it content directly, or maybe some content (such as a length, i.e. number of items) and a pointer to the actual data.
+I've done such super-advanced post-mortem debugging a couple of times (starting with VERY precise knowledge of the Python versions involved and all the prepared preprocessed sources &c) and each time it took me a day or two (were I still a freelance and charging by the hour, if I had to bid on such a task I'd say at least 20 hours -- at my not-cheap hourly rates!-).
+IOW, it's worth it only if it's really truly the only way out of some very costly pickle. On the plus side, it WILL teach you more about Python's internals than you ever thought was there, even after memorizing every line of the sources.  Good luck, you'll need some!!!"
+38280,"After setting limited width size,strings which is too long get truncated in the dropdown of wxcombobox.
+self.namelist = wx.ComboBox(self, -1, """", size=(270,-1))
+Is there any way to make the combobox dropdown scrolls horizontally.So that we can see long strings.?",Can we set horizontal scrollbar for wxcombobox?,"No, but you can use wx.combo.ComboCtrl instead which lets you implement the drop-down window yourself, and then you can make it do whatever you want.  It's not a perfect emulation of the wx.ComboBox, and fairly complex compared to the wx.ComboBox, so it may not be worth it to you for just adding horizontal scrolling.  You can see examples in the wxPython demo."
+60993,Title pretty much sums it up. I don't think it's because I'm loading too much so it takes time to render since I only create a screen manager and a screen initially. so I have no idea what the cause of this is. Please help,Kivy presplash in apk ends too early leaving blank screen for a few seconds,"I was able to fix it by having only a please wait screen in screen manager initially, and loaded some of the module and data I loaded initially after the screen had been rendered by having a clock.schedule_once inside the on_enter method for a few seconds. the schedule was so that the screen is visible as right after the module and data are loaded, it moves to the next screen."
+64588,"I've tried running a program which imports the Pandapower library, and I get the Error:
+NameError: name 'TextPath' is not defined
+
+I installed Pandapower via pip install normally, and it works good, but it seems to have Problems with ""pandapower.plotting.collections"" and the class ""class CustomTextPath(TextPath):""
+Minimal Code:
+import pandapower as pp
+
+import pandapower.plotting as plot
+
+TracebacK:
+Traceback (most recent call last): File ""-\Test.py"", line 2, in <module> import pandapower.plotting as plot File ""-\Python\Python310\lib\site-packages\pandapower\plotting\__init__.py"", line 1, in <module> from pandapower.plotting.collections import * File ""-\Python\Python310\lib\site-packages\pandapower\plotting\collections.py"", line 36, in <module> class CustomTextPath(TextPath): NameError: name 'TextPath' is not defined",name 'TextPath' is not defined,"This is a bug in pandapower.  They depend on having matplotlib installed.  The code catches its absence with a try/except but still tries to use the elements it would have imported.  So, do a pip install matplotlib and you should be good."
+54799,"So as the title suggests, my question is whether feature selection algorithms are independent of the regression/classification model chosen. Maybe some feature selection algorithms are independent and some are not? If so can you name a few of each kind? Thanks.",Is feature selection agnostic to regression/classification model chosen?,"It depends on the algorithm you use to select features.  Filter methods that are done prior to modeling are of course agnostic, as they're using statistical methods like chi-squared or correlation coefficient to get rid of unnecessary features.
+If you use embedded methods where features are selected during model creation, it is possible that different models will find value in different feature sets.  Lasso, Elastic Net, Ridge Regression are a few examples of these. 
+It's worth noting that some model types perform well with sparse data or missing values while others do not."
+22835,"I'm making a game using Python with PyGame module. I am trying to make an introduction screen for my game using a video that I made since it was easier to make a video than coding the animation for the intro screen.
+The Pygame movie module does not work as stated on their site so I cannot use that. I tried using Pymedia but I have no idea how to even get a video running since their documentation weren't that helpful.
+Do you guys know any sample code that uses Pymedia to play a video? Or any code at all that loads a video using python. Or if there's any other video module out there that is simple, please let me know. I'm totally stumped.",Playing Video Files in Python,"I found a solution.
+The latest version of Pygame is still able to play MPEG-1 files. The problem was that there are different encoding of MPEG-1.
+The ones I found that works so far is Any Video Converter and Zamzar.com online converter. The downside to Zamzar is that it outputs really small version of the original video.
+video.online-convert.com does not work"
+38266,"I'm using Python's non-parametric tests to check whether two samples are consistent with being drawn from the same underlying parent populations: scipy.stats.ks_2samp (2-sample Kolmogorov-Smirnov), scipy.stats.anderson_ksamp (Anderson-Darling for k samples), and scipy.stats.ranksums (Mann-Whitney-Wilcoxon for 2 samples). My significance threshold to say that two samples are significantly different from each other is p = 0.01.
+If these three tests return extremely low p-values (sometimes like 10^-30 or lower), then do I need to worry about something having gone wrong with the scipy functions? Are these ridiculously small p-values reliable, and can I just report p << 0.01 (p much less than my threshold)?",Extremely low p-values from non-parametric tests,"You do not need to worry about something going wrong with the scipy functions.  P values that low just mean that it's really unlikely that your samples have the same parent populations.
+That said, if you were not expecting the distributions to be (that) different, now is a good time to make sure you're measuring what you think you're measuring, i.e. you are feeding in the right data to scipy."
+59377,"I am trying to setup lanelet2 package from their git repo. When i try to run the tutorial package on my system running Ubuntu 20.04LTS, i am getting the above error. I tried the same on a python shell and running the command ' import lanelet2', it still throws the same error.",Lanelet2: ImportError: /usr/lib/x86_64-linux-gnu/libboost_python38.so.1.71.0: undefined symbol: _Py_tracemalloc_config,The issue was resolved by one of my colleague. It was mainly caused due to libboost version mismatch from anaconda in my setup. Had to uninstall all libboost packages along with anaconda at first. Then installed libboost again. This resolved the error.
+16179,"I'm trying to build a small process monitoring script on Windows Server 2008.
+The script would:
+
+find target process
+check status (running/unresponsive/stopped)
+kill and restart process if unresponsive/stopped
+
+
+Any suggestion on the best way to implement this?",Check status of process and restart process if unresponsive/stopped - Python,"Naming a process 'unresponsive' is quite subjective. It might be waiting for data and seem unresponsive, or it might be in a (endless) loop and seem unresponsive.
+Usually, what people do is implement hartbeat. That is - have a very tiny socket server in the process where other processes can connect and send ping messages, to which it replies pong. What monitoring tools usually do is ping the process periodically, and if it doesn't respond within a timeout - it's considered unresponsive (and usually gets killed)."
+50396,"I have 10 different IP cameras that I need to access in a FLASK server.
+I would like to know the best way to do that.
+Currently, I have a dictionary that uses an ID to map to a VideoCapture object. A client sends the cam ID to the server and the server accesses the video capture object and returns a captured frame via the read function.
+So technically I have 10 different objects of VideoCapture. Another method that I have used is, that upon getting camera ID, if the current cam ID is different from the received cam ID, then the video cap object is replaced with a new one.
+My question is that is opening 10 video captures at one time fine? My server should be time sensitive. Does opening 10 captures congest the network? If yes then should I stick to the one object approach that always creates a new object on ID change or is there any better way to do this? Thank you.",OpenCV Capturing multiple RTSP Streams - Python,"The first way you used is OK. For every camera, you should keep one capture object. It will work faster than replacing one capture object with multiple connections. If you open RTSP connection, then it will not congest the network until you start reading frames. So you can go with the first way.
+Opening and then releasing one capture object for multiple connections will slow down the speed because in every new connection it needs time to access the camera."
+60093,"I have a question regarding the usage of EFS as and additional memory location for lambda. I am using python along with pandas to perform some tests on my files. And it works great if the files are not that large, but if the files exceed 2-3 GB lambda dies because of the memory limitation (using both max memory and time of lambda). Files are originally located at S3 and I was wondering would it be possible to use EFS in this scenario? If so what would be required for this solution. Would I need to transfer files from S3 to EFS in order to open them?, or is there an better solution where I can directly load the files from S3 to EFS and open them with pandas. And also there is the timeout limitation, but I hope that wont be an issues if the lambda would be faster with EFS.",Using EFS with AWS Lambda (memory issue),"As far as I know pandas requires the whole file to fit into memory.
+In principle you can fit larger files into memory in Lambda, since you can now configure Lambda functions with up to 10GB of RAM.
+That's doesn't translate to you being able to read a 10GB file from S3 and create a dataframe out of it, because in order for pandas to parse the data, it needs to either be stored on disk (of which there's only 500MB available to you) or in memory.
+If you download the file into memory, it also takes up it's size in system memory and then you can create a pandas data frame from that. Pandas data structures are probably larger than the raw bytes of the file, so my guess is that you can load a file from S3 into memory and turn that into a data frame that is about 30-40% of the memory capacity of the lambda function.
+If you store that file on EFS, you'll be able to fit more into memory, because pandas can read the bytes from disk, so you could probably squeeze out a few more gigabytes. These I/O operations take time however and Lambda is limited to at most 15 minutes of runtime. You probably also need to write that data somewhere which takes time as well.
+Bottom line: Loading larger files than that into Lambda is probably not a good idea. If you can, break up the dataset into smaller chunks and have lambda functions work on them in parallel or choose a service like Athena or EMR or Glue ETL, which are built to handle that stuff."
+37499,I'm trying to connect a burlap java server with a python client but I can't find any detail whatsoever regarding how to use burlap with python or if it even is implemented for python. Any ideas? Can I build burlap python clients? Any resources? Would using a hessian python client work with a java burlap server?,Burlap java server to work with python client,"Burlap and Hessian are 2 different (but related) RPC protocols, with Burlap being XML based and Hessian being binary.
+They're both also pretty ancient, so if you have an opportunity to use something else, I'd highly recommend it. If not, then you're going to have to find a Burlap lib for Python.
+Since it seems that a Burlap lib for Python simply doesn't exist (at least anymore), your best choice is probably to make a small Java proxy that communicates with a more recent protocol with the Python side and in Burlap with the Java server."
+45234,"I'm trying to install the jedi autocomplete package in Sublime Text 3. Each time I try to install it using Package Control it just doesn't complete installation even after several HOURS!!!
+It shows me no error messages . The package just doesn't install .
+I've installed Various Packages but never faced this issue.It just Keeps displaying at the bottom of the Sublime Text as Installing but never completes the installation.
+How to solve this problem?
+Is there any other way to install the package?",Can't Install Jedi -Autocomplete in Sublime Text 3,"Sorry for the late reply. Reinstalling sublime and rebooting my Windows 10 seems to have fixe this issue.
+I tried to install jedi again, but in vain. So I reinstalled Sublime Text 3, rebooted my Windows 10 and I was able to install the jedi Autocomplete package."

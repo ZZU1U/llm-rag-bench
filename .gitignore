@@ -1,0 +1,7 @@
+.venv/
+.DS_Store
+knowledge_data/
+neo4j/
+qdrant_data/
+temp.txt
+.env
