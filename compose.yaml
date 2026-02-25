@@ -8,6 +8,7 @@ services:
         - ./neo4j/plugins:/plugins
     environment:
         - NEO4J_AUTH=neo4j/complexpassword
+        - NEO4J_PLUGINS=["apoc"]
     ports:
       - "7474:7474"
       - "7687:7687"
