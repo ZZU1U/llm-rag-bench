@@ -8,6 +8,6 @@ Average Cosine Similarities (higher is better):
 - Qdrant Agent: 0.5935
 - Usual Agent: 0.4520
 
-Median Cosine Distances (lower is better):
-- Qdrant Agent: 0.3337
-- Usual Agent: 0.5644
+Median Cosine Similarities (higher is better):
+- Qdrant Agent: 0.6663
+- Usual Agent: 0.4356
